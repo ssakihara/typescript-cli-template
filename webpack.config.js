@@ -1,22 +1,33 @@
+const path = require('path');
 const Dotenv = require('dotenv-webpack');
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
 const config = {
   entry: { index: './src/index.ts' },
-
+  target: 'node',
   module: {
     rules: [
       {
         test: /\.ts$/,
-        use: 'ts-loader',
+        exclude: /node_modules/,
+        use: {
+          loader: 'ts-loader',
+          options: {
+            configFile: path.resolve(__dirname, 'tsconfig.json'),
+          },
+        },
       },
     ],
   },
   resolve: {
-    extensions: ['.ts'],
-    plugins: [new TsconfigPathsPlugin({ configFile: './tsconfig.json' })],
+    modules: ['node_modules'],
+    extensions: ['.js', '.ts'],
+    alias: {
+      '~': path.resolve(__dirname, './src'),
+    },
   },
-  plugins: [new Dotenv()],
+  plugins: [
+    new Dotenv(),
+  ],
 };
 
 module.exports = (env, argv) => {

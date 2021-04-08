@@ -8,9 +8,9 @@
   "private": true,
   "scripts": {
     "prepare": "husky install",
-    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' -r tsconfig-paths/register src/index.ts",
-    "build:dev": "webpack --mode=development",
-    "build:pro": "webpack --mode=production",
+    "dev": "cross-env NODE_ENV=local nodemon --watch 'src/**/*.ts' --exec 'ts-node' -r tsconfig-paths/register src/index.ts",
+    "build:dev": "cross-env NODE_ENV=development webpack --mode=development",
+    "build:pro": "cross-env NODE_ENV=production webpack --mode=production",
     "lint": "eslint --fix 'src/**/*.ts' && prettier --write 'src/**/*.ts'",
     "test": "jest"
   },
@@ -21,6 +21,7 @@
     "@types/node": "^14.14.37",
     "@typescript-eslint/eslint-plugin": "^4.21.0",
     "@typescript-eslint/parser": "^4.21.0",
+    "cross-env": "^7.0.3",
     "dotenv-webpack": "^7.0.2",
     "eslint": "^7.23.0",
     "eslint-config-prettier": "^8.1.0",
